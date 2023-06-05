@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
 
+
+{% block style %}
+   <link href="{% static "vendor/css/products.css" %}" rel="stylesheet">
+{% endblock %}
+
 {% block content %}
     <!-- Page Content -->
   <div class="container">
