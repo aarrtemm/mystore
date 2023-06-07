@@ -21,3 +21,7 @@ class ProductListView(generic.ListView):
         context["genders"] = Gender.objects.all()
 
         return context
+
+
+class ProductDetailView(generic.DetailView):
+    model = Product
