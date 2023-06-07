@@ -30,6 +30,14 @@
 
 {% block content %}{% endblock %}
 
+{% block pagination %}
+    {% include "includes/pagination.html" %}
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+
+
 <!-- Bootstrap core JavaScript -->
 <script src="{% static "vendor/jquery/jquery.min.js" %}"></script>
 <script src="{% static "vendor/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
