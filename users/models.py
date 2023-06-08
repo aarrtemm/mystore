@@ -3,7 +3,7 @@ from django.db import models
 
 
 class User(AbstractUser):
-    image = models.ImageField(upload_to="image_user")
+    image = models.ImageField(upload_to="image_user", blank=True, null=True)
 
     class Meta:
         verbose_name = "user"
