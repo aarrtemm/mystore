@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django import forms
 
 from users.models import User
@@ -25,3 +25,14 @@ class SingUpForm(UserCreationForm):
             "last_name",
             "email",
         )
+
+
+class UserLoginForm(AuthenticationForm):
+    username = forms.CharField(max_length=30, widget=forms.TextInput(attrs={
+        "class": "form-control py-4", "placeholder": "Username"}))
+    password = forms.CharField(max_length=30, widget=forms.PasswordInput(attrs={
+        "class": "form-control py-4", "placeholder": "Password"}))
+
+    class Meta:
+        model = User
+        fields = ("username", "password")
