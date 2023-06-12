@@ -10,30 +10,37 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url "products:products" %}">Catalog <i class="fas fa-shopping-bag"></i> </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url "users:login" %}">Log in<i class="fas fa-sign-in-alt"></i></a>
-                </li>
+                {% if not user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url "users:login" %}">Log in<i class="fas fa-sign-in-alt"></i></a>
+                    </li>
+                {% endif %}
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                        data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fas fa-user-circle"></i>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item" href="users/profile.html">Profile</a>
-                        </li>
+                        {% if user.is_authenticated %}
+                            <li>
+                                <a class="dropdown-item" href="users/profile.html">Profile</a>
+                            </li>
+                        {% endif %}
                         <li><a class="dropdown-item" href="users/orders.html">Orders</a></li>
                         {% if user.is_superuser %}
                             <li><a class="dropdown-item" href="{% url "admin:index" %}">Admin-page</a></li>
                         {% endif %}
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="#">
-                                Logout
-                            </a>
-                        </li>
+                        {% if user.is_authenticated %}
+                             <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{% url "users:logout" %}">
+                                    Logout
+                                </a>
+                            </li>
+                        {% endif %} 
                     </ul>
                 </li>
             </ul>
