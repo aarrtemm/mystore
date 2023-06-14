@@ -7,7 +7,6 @@ from .forms import SingUpForm, UserLoginForm, UserProfileForm
 from products.models import Basket
 
 
-
 def registration(request):
     form = SingUpForm()
     if request.method == "POST":
