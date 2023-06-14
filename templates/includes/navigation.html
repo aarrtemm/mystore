@@ -8,7 +8,8 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url "products:products" %}">Catalog <i class="fas fa-shopping-bag"></i> </a>
+                    <a class="nav-link" href="{% url "products:products" %}">Catalog <i class="fas fa-shopping-bag"></i>
+                    </a>
                 </li>
                 {% if not user.is_authenticated %}
                     <li class="nav-item">
@@ -28,11 +29,11 @@
                             </li>
                         {% endif %}
                         <li><a class="dropdown-item" href="users/orders.html">Orders</a></li>
-                        {% if user.is_superuser %}
+                        {% if user.is_superuser or user.is_staff %}
                             <li><a class="dropdown-item" href="{% url "admin:index" %}">Admin-page</a></li>
                         {% endif %}
                         {% if user.is_authenticated %}
-                             <li>
+                            <li>
                                 <hr class="dropdown-divider">
                             </li>
                             <li>
@@ -40,7 +41,7 @@
                                     Logout
                                 </a>
                             </li>
-                        {% endif %} 
+                        {% endif %}
                     </ul>
                 </li>
             </ul>

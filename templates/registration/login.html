@@ -9,10 +9,10 @@
      <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-5">
-                        {% if form.errors %}
+                        {% if form.non_field_errors %}
                             <div class="alert alert-warning alert-dismissible fade show" role="alert"
                                  style="margin-top: 50px;">
-                                <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+                                {{ form.non_field_errors }}
                                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
