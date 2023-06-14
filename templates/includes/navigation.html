@@ -24,7 +24,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         {% if user.is_authenticated %}
                             <li>
-                                <a class="dropdown-item" href="users/profile.html">Profile</a>
+                                <a class="dropdown-item" href="{% url "users:profile" %}">Profile</a>
                             </li>
                         {% endif %}
                         <li><a class="dropdown-item" href="users/orders.html">Orders</a></li>

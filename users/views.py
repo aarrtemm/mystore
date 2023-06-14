@@ -3,8 +3,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.views import LoginView, LogoutView
 
-from .forms import SingUpForm, UserLoginForm
-from .models import User
+from .forms import SingUpForm, UserLoginForm, UserProfileForm
+
 
 
 def registration(request):
@@ -31,4 +31,16 @@ class UserLogoutView(LogoutView):
 
 
 def profile(request):
-    pass
+    form = UserProfileForm()
+    if request.method == "POST":
+        form = UserProfileForm(instance=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect(reverse("users:profile"))
+        else:
+            print(form.errors)
+
+    else:
+        form = UserProfileForm(instance=request.user)
+    context = {"form": form}
+    return render(request, "registration/profile.html", context=context)
