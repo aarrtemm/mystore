@@ -1,7 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, HttpResponseRedirect
 from django.views import generic
 
-from products.models import Product, ProductCategory, Gender
+from products.models import (
+    Product,
+    ProductCategory,
+    Gender,
+    Basket
+)
 
 
 def index(request, *args, **kwargs):
@@ -25,3 +30,17 @@ class ProductListView(generic.ListView):
 
 class ProductDetailView(generic.DetailView):
     model = Product
+
+
+def basket_add(request, product_id):
+    product = Product.objects.get(id=product_id)
+    baskets = Basket.objects.filter(user=request.user, product=product)
+
+    if not baskets.exists():
+        Basket.objects.create(user=request.user, product=product, quantity=1)
+    else:
+        basket = baskets.first()
+        basket.quantity += 1
+        basket.save()
+
+    return HttpResponseRedirect(request.META["HTTP_REFERER"])

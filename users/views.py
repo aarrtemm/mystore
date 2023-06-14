@@ -4,6 +4,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.views import LoginView, LogoutView
 
 from .forms import SingUpForm, UserLoginForm, UserProfileForm
+from products.models import Basket
 
 
 
@@ -42,5 +43,8 @@ def profile(request):
 
     else:
         form = UserProfileForm(instance=request.user)
-    context = {"form": form}
+    context = {
+        "form": form,
+        "baskets": Basket.objects.filter(user=request.user)
+    }
     return render(request, "registration/profile.html", context=context)
