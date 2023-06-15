@@ -2,6 +2,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import login_required
 
 from .forms import SingUpForm, UserLoginForm, UserProfileForm
 from products.models import Basket
@@ -30,6 +31,7 @@ class UserLogoutView(LogoutView):
     next_page = reverse_lazy("users:login")
 
 
+@login_required()
 def profile(request):
     form = UserProfileForm()
     if request.method == "POST":

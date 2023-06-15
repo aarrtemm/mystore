@@ -34,6 +34,8 @@ INTERNAL_IPS = ["127.0.0.1"]
 # USER
 AUTH_USER_MODEL = "users.User"
 
+LOGIN_URL = "/user/login/"
+
 LOGIN_REDIRECT_URL = "/"
 
 

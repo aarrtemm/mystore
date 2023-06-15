@@ -1,5 +1,6 @@
 from django.shortcuts import render, HttpResponseRedirect
 from django.views import generic
+from django.contrib.auth.views import login_required
 
 from products.models import (
     Product,
@@ -19,6 +20,18 @@ class ProductListView(generic.ListView):
     context_object_name = "products"
     paginate_by = 6
 
+    def get_queryset(self):
+        category_id = self.kwargs.get("category_id")
+        gender_id = self.kwargs.get("gender_id")
+        queryset = Product.objects.all()
+
+        if category_id:
+            queryset = queryset.filter(categories__id=category_id)
+        if gender_id:
+            queryset = queryset.filter(gender_id=gender_id)
+
+        return queryset
+
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ProductListView, self).get_context_data(**kwargs)
 
@@ -32,6 +45,7 @@ class ProductDetailView(generic.DetailView):
     model = Product
 
 
+@login_required
 def basket_add(request, product_id):
     product = Product.objects.get(id=product_id)
     baskets = Basket.objects.filter(user=request.user, product=product)
@@ -46,6 +60,7 @@ def basket_add(request, product_id):
     return HttpResponseRedirect(request.META["HTTP_REFERER"])
 
 
+@login_required
 def basket_remove(request, basket_id):
     basket = Basket.objects.get(id=basket_id)
     basket.delete()
