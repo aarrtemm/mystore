@@ -5,7 +5,8 @@ from products.views import (
     ProductListView,
     ProductDetailView,
     basket_add,
-    basket_remove
+    basket_remove,
+    ProductCreateView
 )
 
 app_name = "products"
@@ -17,5 +18,6 @@ urlpatterns = [
     path("genders/<int:gender_id>/", ProductListView.as_view(), name="gender"),
     path("products/<int:pk>/", ProductDetailView.as_view(), name="product_detail"),
     path("products/add/<int:product_id>/", basket_add, name="basket_add"),
-    path("products/remove/<int:basket_id>", basket_remove, name="basket_remove")
+    path("products/remove/<int:basket_id>", basket_remove, name="basket_remove"),
+    path("products/create/", ProductCreateView.as_view(), name="product_create"),
 ]

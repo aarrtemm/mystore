@@ -1,4 +1,5 @@
 from django.shortcuts import render, HttpResponseRedirect
+from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.views import login_required
 
@@ -9,6 +10,7 @@ from products.models import (
     Basket
 )
 
+from products.forms import ProductCreateForm
 
 def index(request, *args, **kwargs):
     return render(request, 'products/index.html')
@@ -43,6 +45,13 @@ class ProductListView(generic.ListView):
 
 class ProductDetailView(generic.DetailView):
     model = Product
+
+
+class ProductCreateView(generic.CreateView):
+    model = Product
+    form_class = ProductCreateForm
+    success_url = reverse_lazy("products:products")
+
 
 
 @login_required
