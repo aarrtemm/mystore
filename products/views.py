@@ -10,7 +10,8 @@ from products.models import (
     Basket
 )
 
-from products.forms import ProductCreateForm
+from products.forms import ProductForm
+
 
 def index(request, *args, **kwargs):
     return render(request, 'products/index.html')
@@ -49,9 +50,21 @@ class ProductDetailView(generic.DetailView):
 
 class ProductCreateView(generic.CreateView):
     model = Product
-    form_class = ProductCreateForm
+    form_class = ProductForm
+    template_name = "products/product_form.html"
     success_url = reverse_lazy("products:products")
 
+
+class ProductUpdateView(generic.UpdateView):
+    model = Product
+    form_class = ProductForm
+    template_name = "products/product_form.html"
+    success_url = reverse_lazy("products:products")
+
+
+class ProductDeleteView(generic.DeleteView):
+    model = Product
+    success_url = reverse_lazy("products:products")
 
 
 @login_required

@@ -3,7 +3,7 @@ from django import forms
 from products.models import Product, ProductCategory
 
 
-class ProductCreateForm(forms.ModelForm):
+class ProductForm(forms.ModelForm):
     categories = forms.ModelMultipleChoiceField(
         queryset=ProductCategory.objects.all(),
         widget=forms.CheckboxSelectMultiple,
