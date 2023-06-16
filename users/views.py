@@ -33,7 +33,6 @@ class UserLogoutView(LogoutView):
 
 @login_required()
 def profile(request):
-    form = UserProfileForm()
     if request.method == "POST":
         form = UserProfileForm(instance=request.user, data=request.POST)
         if form.is_valid():
