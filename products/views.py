@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
@@ -10,7 +11,7 @@ from products.models import (
     Basket
 )
 
-from products.forms import ProductForm
+from products.forms import ProductForm, GetQuantityProductForm
 
 
 def index(request, *args, **kwargs):
@@ -47,6 +48,13 @@ class ProductListView(generic.ListView):
 class ProductDetailView(generic.DetailView):
     model = Product
 
+    def get_context_data(self, **kwargs):
+        context = super(ProductDetailView, self).get_context_data(**kwargs)
+
+        context["form"] = GetQuantityProductForm()
+        context["quantity"] = 1
+        return context
+
 
 class ProductCreateView(generic.CreateView):
     model = Product
@@ -69,12 +77,16 @@ class ProductDeleteView(generic.DeleteView):
 def basket_add(request, product_id):
     product = Product.objects.get(id=product_id)
     baskets = Basket.objects.filter(user=request.user, product=product)
+    quantity = int(request.POST.get('quantity', 1))
+
+    if quantity > product.quantity:
+        return HttpResponse("Unavailable item quantity!")
 
     if not baskets.exists():
-        Basket.objects.create(user=request.user, product=product, quantity=1)
+        Basket.objects.create(user=request.user, product=product, quantity=quantity)
     else:
         basket = baskets.first()
-        basket.quantity += 1
+        basket.quantity += quantity
         basket.save()
 
     return HttpResponseRedirect(request.META["HTTP_REFERER"])
