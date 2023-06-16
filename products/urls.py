@@ -7,7 +7,8 @@ from products.views import (
     basket_add,
     basket_remove,
     ProductCreateView,
-    ProductUpdateView, ProductDeleteView,
+    ProductUpdateView,
+    ProductDeleteView,
 )
 
 app_name = "products"

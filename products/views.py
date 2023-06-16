@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponseRedirect
+from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.views import login_required
@@ -51,14 +51,12 @@ class ProductDetailView(generic.DetailView):
 class ProductCreateView(generic.CreateView):
     model = Product
     form_class = ProductForm
-    template_name = "products/product_form.html"
     success_url = reverse_lazy("products:products")
 
 
 class ProductUpdateView(generic.UpdateView):
     model = Product
     form_class = ProductForm
-    template_name = "products/product_form.html"
     success_url = reverse_lazy("products:products")
 
 
