@@ -22,7 +22,21 @@ class CancelTemplateView(TemplateView):
 
 
 class OrderListView(ListView):
-    template_name = "orders/"
+    template_name = "orders/order_list.html"
+    queryset = Order.objects.all()
+    ordering = ("-created", )
+
+    def get_queryset(self):
+        queryset = super(OrderListView, self).get_queryset()
+        return queryset.filter(initiator=self.request.user)
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(OrderListView, self).get_context_data(**kwargs)
+        baskets = Basket.objects.filter(user=self.request.user)
+
+        context["total_amount"] = baskets.total_sum()
+
+        return context
 
 
 class OrderCreateView(LoginRequiredMixin, CreateView):
