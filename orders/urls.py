@@ -4,7 +4,8 @@ from orders.views import (
     OrderCreateView,
     SuccessTemplateView,
     CancelTemplateView,
-    OrderListView
+    OrderListView,
+    OrderDetailView
 )
 
 
@@ -15,5 +16,5 @@ urlpatterns = [
     path("order-success/", SuccessTemplateView.as_view(), name="order-success"),
     path("order-canceled/", CancelTemplateView.as_view(), name="order-canceled"),
     path("order-list/", OrderListView.as_view(), name="order-list"),
-
+    path("order/<int:pk>/", OrderDetailView.as_view(), name="order-detail"),
 ]

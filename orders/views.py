@@ -1,6 +1,6 @@
-import simplejson as json
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
+from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
     TemplateView,
@@ -21,55 +21,50 @@ class CancelTemplateView(TemplateView):
     template_name = "orders/canceled.html"
 
 
-class OrderListView(ListView):
+class OrderListView(LoginRequiredMixin, ListView):
     template_name = "orders/order_list.html"
-    queryset = Order.objects.all()
+    model = Order
     ordering = ("-created", )
 
     def get_queryset(self):
         queryset = super(OrderListView, self).get_queryset()
         return queryset.filter(initiator=self.request.user)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(OrderListView, self).get_context_data(**kwargs)
-        baskets = Basket.objects.filter(user=self.request.user)
 
-        context["total_amount"] = baskets.total_sum()
-
-        return context
+class OrderDetailView(LoginRequiredMixin, DetailView):
+    model = Order
 
 
 class OrderCreateView(LoginRequiredMixin, CreateView):
     model = Order
     form_class = OrderForm
     template_name = "orders/order_form.html"
+    success_url = reverse_lazy("orders:order-success")
 
     def get_context_data(self, **kwargs):
-        context = super(OrderCreateView, self).get_context_data(**kwargs)
-
+        context = super().get_context_data(**kwargs)
         context["baskets"] = Basket.objects.filter(user=self.request.user)
         return context
 
-    def post(self, request, *args, **kwargs):
+    def form_valid(self, form):
         user = self.request.user
         baskets = Basket.objects.filter(user=user)
-        if not baskets:
+        if not baskets.exists():
             return redirect("orders:order-canceled")
 
-        order = Order.objects.create(
-            first_name=request.POST.get('first_name'),
-            last_name=request.POST.get('last_name'),
-            email=request.POST.get('email'),
-            initiator=user
-        )
+        order = form.save(commit=False)
+        order.initiator = user
+        order.save()
 
-        basket_history = []
+        basket_history = {}
         for basket in baskets:
-            basket_history.append(json.dumps(basket.get_json(), use_decimal=True))
+            basket_history[str(basket.id)] = basket.get_json()
 
         order.basket_history = basket_history
         order.save()
+
+        for basket in baskets:
+            order.purchased_goods.add(basket.product)
         baskets.delete()
 
-        return redirect("orders:order-success")
-
+        return super().form_valid(form)

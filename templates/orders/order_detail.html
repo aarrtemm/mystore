@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block style %}
+    <link href="{% static "vendor/css/orders.css" %}" rel="stylesheet">
+{% endblock %}
+
+
+{% block content %}
+    <section>
+        <div class="container pt-5">
+            <div class="text-center mt-5">
+                <h1>Order №{{ object.id }}</h1>
+                <div class="orders mt-5">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Price</th>
+                            <th scope="col">Sum</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for purchased_good in object.purchased_goods.all %}
+                            <tr>
+                                <th scope="row">
+                                    {{ purchased_good.name }}
+                                </th>
+                                <td>{{ purchased_good.quantity }}</td>
+                                <td>${{ purchased_good.price }}</td>
+                                <td>{{ purchased_good.sum }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <p class="float-right h4 mt-3">Total ${{ object.calculate_total_sum }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
