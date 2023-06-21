@@ -15,7 +15,9 @@ class GenderAdmin(admin.ModelAdmin):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    pass
+    list_display = ("name", "price", "quantity", "gender")
+    search_fields = ("name", )
+    list_filter = ("gender", "categories")
 
 
 @admin.register(Basket)
