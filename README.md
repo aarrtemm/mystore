@@ -36,6 +36,9 @@ python manage.py runserver
 
 5.Access the website locally at http://localhost:8000.
 
+Username: Admin
+Password: 1qaz3edc
+
 ## Contributing
 Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request.
 
