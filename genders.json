@@ -1,1 +1,5 @@
-[{"model": "products.gender", "pk": 1, "fields": {"name": "Male"}}, {"model": "products.gender", "pk": 2, "fields": {"name": "Female"}}, {"model": "products.gender", "pk": 3, "fields": {"name": "Unisex"}}]
+[
+    {"model": "products.gender", "pk": 1, "fields": {"name": "Male"}},
+    {"model": "products.gender", "pk": 2, "fields": {"name": "Female"}},
+    {"model": "products.gender", "pk": 3, "fields": {"name": "Unisex"}},
+]

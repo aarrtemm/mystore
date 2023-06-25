@@ -1,1 +1,7 @@
-[{"model": "products.productcategory", "pk": 1, "fields": {"name": "New"}}, {"model": "products.productcategory", "pk": 2, "fields": {"name": "Clothes"}}, {"model": "products.productcategory", "pk": 3, "fields": {"name": "Shoes"}}, {"model": "products.productcategory", "pk": 4, "fields": {"name": "Accessories"}}, {"model": "products.productcategory", "pk": 5, "fields": {"name": "Gift"}}]
+[
+    {"model": "products.productcategory", "pk": 1, "fields": {"name": "New"}},
+    {"model": "products.productcategory", "pk": 2, "fields": {"name": "Clothes"}},
+    {"model": "products.productcategory", "pk": 3, "fields": {"name": "Shoes"}},
+    {"model": "products.productcategory", "pk": 4, "fields": {"name": "Accessories"}},
+    {"model": "products.productcategory", "pk": 5, "fields": {"name": "Gift"}},
+]

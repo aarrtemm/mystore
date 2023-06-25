@@ -4,18 +4,13 @@ from django.urls import reverse_lazy
 from django.views import generic
 from django.contrib.auth.views import login_required
 
-from products.models import (
-    Product,
-    ProductCategory,
-    Gender,
-    Basket
-)
+from products.models import Product, ProductCategory, Gender, Basket
 
 from products.forms import ProductForm, GetQuantityProductForm
 
 
 def index(request, *args, **kwargs):
-    return render(request, 'products/index.html')
+    return render(request, "products/index.html")
 
 
 class ProductListView(generic.ListView):
@@ -77,7 +72,7 @@ class ProductDeleteView(generic.DeleteView):
 def basket_add(request, product_id):
     product = Product.objects.get(id=product_id)
     baskets = Basket.objects.filter(user=request.user, product=product)
-    quantity = int(request.POST.get('quantity', 1))
+    quantity = int(request.POST.get("quantity", 1))
 
     if quantity > product.quantity:
         return HttpResponse("Unavailable item quantity!")

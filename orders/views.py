@@ -24,7 +24,7 @@ class CancelTemplateView(TemplateView):
 class OrderListView(LoginRequiredMixin, ListView):
     template_name = "orders/order_list.html"
     model = Order
-    ordering = ("-created", )
+    ordering = ("-created",)
 
     def get_queryset(self):
         queryset = super(OrderListView, self).get_queryset()

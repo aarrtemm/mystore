@@ -25,11 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-h^k#ze^twga+jx)m^_7vc5)-@z9c@z=5bb5q1eu_llyi4qp%j6"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
-
-INTERNAL_IPS = ["127.0.0.1"]
 
 # USER
 AUTH_USER_MODEL = "users.User"
@@ -50,11 +48,10 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "products",
-    "debug_toolbar",
     "users",
     "crispy_forms",
     "crispy_bootstrap4",
-    "orders"
+    "orders",
 ]
 
 # CRISPY
@@ -62,7 +59,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -140,9 +136,7 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 
-STATICFILES_DIRS = [
-    BASE_DIR / "static"
-]
+STATICFILES_DIRS = [BASE_DIR / "static"]
 
 MEDIA_URL = "/media/"
 
