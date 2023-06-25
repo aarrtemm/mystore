@@ -1,10 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
 
-
+{% block title %}
+    <title>MyStore - Catalog</title>
+{% endblock %}
 {% block style %}
     <link href="{% static "vendor/css/products.css" %}" rel="stylesheet">
 {% endblock %}
+
 
 {% block content %}
     <!-- Page Content -->

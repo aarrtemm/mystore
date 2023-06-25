@@ -23,7 +23,12 @@ class Gender(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    image = models.ImageField(upload_to="products_images")
+    image = models.ImageField(
+        upload_to="products_images",
+        null=True,
+        blank=True,
+        default="media/images/example.jpg"
+    )
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=5, decimal_places=2)
     quantity = models.PositiveIntegerField(default=0)

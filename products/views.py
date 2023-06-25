@@ -89,11 +89,11 @@ def basket_add(request, product_id):
         basket.quantity += quantity
         basket.save()
 
-    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+    return HttpResponseRedirect(reverse_lazy("products:products"))
 
 
 @login_required
 def basket_remove(request, basket_id):
     basket = Basket.objects.get(id=basket_id)
     basket.delete()
-    return HttpResponseRedirect(request.META["HTTP_REFERER"])
+    return HttpResponseRedirect(reverse_lazy("products:products"))
