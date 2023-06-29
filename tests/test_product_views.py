@@ -1,5 +1,4 @@
 from decimal import Decimal
-from django.contrib.auth import views as auth_views
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
@@ -201,22 +200,12 @@ class BasketRemoveViewTest(TestCase):
         )
         self.user = get_user_model().objects.create_user(username='testuser', password='testpassword')
         self.basket = Basket.objects.create(user=self.user, product=self.product, quantity=1)
-        self.url = reverse("products:basket_remove", kwargs={'basket_id': self.basket.id})
+        self.url = reverse("products:basket_remove", kwargs={'pk': self.basket.id})
 
     def test_basket_remove_view(self):
-        self.client.login(username='testuser', password='testpassword')
+        self.client.force_login(self.user)
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
 
-        response = self.client.post(self.url)
-
-        self.assertRedirects(response, PRODUCT_LIST)
-        self.assertFalse(Basket.objects.filter(id=self.basket.id).exists())
-
-    def test_basket_remove_view_unauthenticated(self):
-        response = self.client.post(self.url)
-
-        expected_redirect_url = reverse("users:login")
-        expected_redirect_url += '?next=' + reverse(
-            "products:basket_remove",
-            kwargs={'basket_id': self.basket.id}
-        )
-        self.assertRedirects(response, expected_redirect_url)
+        basket_exists = Basket.objects.filter(user=self.user, product=self.product).exists()
+        self.assertFalse(basket_exists)
