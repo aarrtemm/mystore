@@ -8,8 +8,8 @@ class Order(models.Model):
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)
     email = models.EmailField(max_length=255)
-    basket_history = models.JSONField(default=dict)
     purchased_goods = models.ManyToManyField(Product)
+    quantity = models.PositiveSmallIntegerField(default=0)
     address = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
     initiator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -18,8 +18,5 @@ class Order(models.Model):
         return f"Order #{self.id}. {self.first_name} {self.last_name}"
 
     def calculate_total_sum(self):
-        total_sum = 0
-        for product in self.purchased_goods.all():
-            total_sum += product.sum()
-
+        total_sum = sum([product.total_price() for product in self.purchased_goods.all()])
         return total_sum

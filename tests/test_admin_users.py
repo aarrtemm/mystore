@@ -5,17 +5,23 @@ from django.urls import reverse
 
 
 class AdminSiteTest(TestCase):
+
     def setUp(self):
         image_file = SimpleUploadedFile(
-            name="test_image.jpg",
-            content=b"media/products_images/images.jpg",
-            content_type="image/jpeg",
+            name='test_image.jpg',
+            content=b'media/products_images/images.jpg',
+            content_type='image/jpeg'
         )
-        self.admin = get_user_model().objects.create_superuser("admin", "12345678fgh")
+        self.admin = get_user_model().objects.create_superuser(
+            "admin",
+            "12345678fgh"
+        )
         self.client.force_login(self.admin)
 
         self.user = get_user_model().objects.create_user(
-            username="testuser", password="testpassword", image=image_file
+            username="testuser",
+            password="testpassword",
+            image=image_file
         )
 
     def test_user_change_image_listed(self):

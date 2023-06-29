@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+
 # USER
 AUTH_USER_MODEL = "users.User"
 
@@ -51,7 +52,7 @@ INSTALLED_APPS = [
     "users",
     "crispy_forms",
     "crispy_bootstrap4",
-    "orders",
+    "orders"
 ]
 
 # CRISPY
@@ -136,7 +137,9 @@ USE_TZ = True
 STATIC_URL = "/static/"
 
 
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [
+    BASE_DIR / "static"
+]
 
 MEDIA_URL = "/media/"
 

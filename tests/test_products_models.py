@@ -21,26 +21,24 @@ class ProductModelTests(TestCase):
             name="Product 1",
             price=10,
             quantity=2,
-            gender=Gender.objects.create(name="testgender"),
+            gender=Gender.objects.create(name="testgender")
         )
 
     def test_product_name(self):
         self.assertEqual(str(self.product), "Name: Product 1")
 
     def test_product_sum(self):
-        self.assertEqual(self.product.sum(), 20)
+        self.assertEqual(self.product.total_price(), 20)
 
 
 class BasketModelTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(
-            username="testuser", password="testpassword"
-        )
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
         self.product = Product.objects.create(
             name="Product 1",
             price=10,
             quantity=1,
-            gender=Gender.objects.create(name="TestGender"),
+            gender=Gender.objects.create(name="TestGender")
         )
 
     def test_basket_str(self):
@@ -49,36 +47,20 @@ class BasketModelTests(TestCase):
 
     def test_basket_sum(self):
         basket = Basket.objects.create(user=self.user, product=self.product, quantity=2)
-        self.assertEqual(basket.sum(), 20)
-
-    def test_basket_get_json(self):
-        basket = Basket.objects.create(user=self.user, product=self.product, quantity=2)
-        expected_json = {
-            "product_name": "Product 1",
-            "quantity": 2,
-            "price": 10.0,
-            "sum": 20.0,
-        }
-        self.assertEqual(basket.get_json(), expected_json)
+        self.assertEqual(basket.sum_for_basket(), 20)
 
 
 class BasketQuerySetTests(TestCase):
     def setUp(self):
-        self.user = User.objects.create_user(
-            username="testuser", password="testpassword"
-        )
+        self.user = User.objects.create_user(username='testuser', password='testpassword')
         self.product = Product.objects.create(
             name="Product 1",
             price=10,
             quantity=1,
-            gender=Gender.objects.create(name="testname"),
+            gender=Gender.objects.create(name="testname")
         )
-        self.basket1 = Basket.objects.create(
-            user=self.user, product=self.product, quantity=2
-        )
-        self.basket2 = Basket.objects.create(
-            user=self.user, product=self.product, quantity=3
-        )
+        self.basket1 = Basket.objects.create(user=self.user, product=self.product, quantity=2)
+        self.basket2 = Basket.objects.create(user=self.user, product=self.product, quantity=3)
 
     def test_total_quantity(self):
         queryset = Basket.objects.all()

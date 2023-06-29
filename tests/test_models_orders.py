@@ -7,22 +7,26 @@ from orders.models import Order
 
 class OrderModelTests(TestCase):
     def setUp(self):
-        self.user = get_user_model().objects.create_user(
-            username="testuser", password="testpassword"
-        )
+        self.user = get_user_model().objects.create_user(username='testuser', password='testpassword')
         gender = Gender.objects.create(name="TestGender")
         self.product1 = Product.objects.create(
-            name="Product 1", price=10, quantity=1, gender=gender
+            name='Product 1',
+            price=10,
+            quantity=1,
+            gender=gender
         )
         self.product2 = Product.objects.create(
-            name="Product 2", price=15, quantity=1, gender=gender
+            name='Product 2',
+            price=15,
+            quantity=1,
+            gender=gender
         )
         self.order = Order.objects.create(
-            first_name="John",
-            last_name="Doe",
-            email="johndoe@example.com",
-            address="123 Main St",
-            initiator=self.user,
+            first_name='John',
+            last_name='Doe',
+            email='johndoe@example.com',
+            address='123 Main St',
+            initiator=self.user
         )
         self.order.purchased_goods.add(self.product1, self.product2)
 

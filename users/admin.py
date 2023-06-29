@@ -6,7 +6,9 @@ from users.models import User
 
 @admin.register(User)
 class UserAdmin(UserAdmin):
-    fieldsets = UserAdmin.fieldsets + ((("Additional info", {"fields": ("image",)}),))
+    fieldsets = UserAdmin.fieldsets + (
+        (("Additional info", {"fields": ("image",)}),)
+    )
     add_fieldsets = UserAdmin.add_fieldsets + (
         (
             (

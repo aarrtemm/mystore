@@ -24,7 +24,7 @@ class CancelTemplateView(TemplateView):
 class OrderListView(LoginRequiredMixin, ListView):
     template_name = "orders/order_list.html"
     model = Order
-    ordering = ("-created",)
+    ordering = ("-created", )
 
     def get_queryset(self):
         queryset = super(OrderListView, self).get_queryset()
@@ -54,13 +54,6 @@ class OrderCreateView(LoginRequiredMixin, CreateView):
 
         order = form.save(commit=False)
         order.initiator = user
-        order.save()
-
-        basket_history = {}
-        for basket in baskets:
-            basket_history[str(basket.id)] = basket.get_json()
-
-        order.basket_history = basket_history
         order.save()
 
         for basket in baskets:

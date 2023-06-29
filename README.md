@@ -36,5 +36,13 @@ python manage.py runserver
 
 5.Access the website locally at http://localhost:8000.
 
+Username: Admin
+
+Password: 1qaz3edc
+
 ## Contributing
 Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please open an issue or submit a pull request.
+
+## DB Structure
+![image](https://github.com/aarrtemm/mystore/assets/115632117/3dfc3fef-8262-4236-ac29-0ed791f59db3)
+

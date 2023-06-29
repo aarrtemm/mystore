@@ -27,7 +27,7 @@ class Product(models.Model):
         upload_to="products_images",
         null=True,
         blank=True,
-        default="media/images/example.jpg",
+        default="media/images/example.jpg"
     )
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=5, decimal_places=2)
@@ -38,16 +38,17 @@ class Product(models.Model):
     def __str__(self):
         return f"Name: {self.name}"
 
-    def sum(self):
+    def total_price(self):
         return self.price * self.quantity
 
 
 class BasketQuerySet(models.QuerySet):
+
     def total_quantity(self):
         return sum(basket.quantity for basket in self)
 
     def total_sum(self):
-        return sum(basket.sum() for basket in self)
+        return sum(basket.sum_for_basket() for basket in self)
 
 
 class Basket(models.Model):
@@ -61,14 +62,5 @@ class Basket(models.Model):
     def __str__(self):
         return f"Basket for: {self.user.username} | Product: {self.product.name}"
 
-    def sum(self):
+    def sum_for_basket(self):
         return self.product.price * self.quantity
-
-    def get_json(self):
-        basket_item = {
-            "product_name": self.product.name,
-            "quantity": self.quantity,
-            "price": float(self.product.price),
-            "sum": float(self.sum()),
-        }
-        return basket_item

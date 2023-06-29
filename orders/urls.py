@@ -5,7 +5,7 @@ from orders.views import (
     SuccessTemplateView,
     CancelTemplateView,
     OrderListView,
-    OrderDetailView,
+    OrderDetailView
 )
 
 
