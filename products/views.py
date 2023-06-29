@@ -26,14 +26,15 @@ class ProductListView(generic.ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        category_id = self.kwargs.get("category_id")
-        gender_id = self.kwargs.get("gender_id")
-        queryset = Product.objects.all()
+        queryset = super().get_queryset()
+
+        category_id = self.request.GET.get("category_id")
+        gender_id = self.request.GET.get("gender_id")
 
         if category_id:
             queryset = queryset.filter(categories__id=category_id)
         if gender_id:
-            queryset = queryset.filter(gender_id=gender_id)
+            queryset = queryset.filter(gender__id=gender_id)
 
         return queryset
 
