@@ -2,8 +2,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views import generic, View
-from django.contrib.auth.views import login_required
+from django.views import generic
+from django.views.generic import View
 
 from products.models import (
     Product,
@@ -75,7 +75,6 @@ class ProductDeleteView(generic.DeleteView):
 
 
 class BasketAddView(LoginRequiredMixin, View):
-    success_url = reverse_lazy("products:products")
 
     def post(self, request, *args, **kwargs):
         product_id = self.kwargs["pk"]
@@ -95,8 +94,9 @@ class BasketAddView(LoginRequiredMixin, View):
 
         return HttpResponseRedirect(reverse_lazy("products:products"))
 
-@login_required
-def basket_remove(request, basket_id):
-    basket = Basket.objects.get(id=basket_id)
-    basket.delete()
-    return HttpResponseRedirect(reverse_lazy("products:products"))
+
+class BasketRemoveView(LoginRequiredMixin, View):
+    def get(self, request, pk):
+        basket = get_object_or_404(Basket, id=pk)
+        basket.delete()
+        return HttpResponseRedirect(reverse_lazy("users:profile"))

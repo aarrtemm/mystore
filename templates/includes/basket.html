@@ -16,9 +16,11 @@
                         </div>
                         <div class="col-lg-4">${{ basket.sum_for_basket }}</div>
                         <div class="col-lg-4">
-                            <a href="{% url "products:basket_remove" basket.id %}">
-                                <i class="fas fa-trash"></i>
-                            </a>
+                            <form action="{% url "products:basket_remove" basket.id %}" method="post">
+                                <a href="{% url "products:basket_remove" basket.id %}">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </form>
                         </div>
                     </div>
                 </li>

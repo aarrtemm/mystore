@@ -90,7 +90,7 @@
                                     <form action="{% url "products:basket_add" product.id %}" method="post">
                                         {% csrf_token %}
                                         <button class="btn btn-outline-success"
-                                           href="{% url "products:basket_add" product.id %}">
+                                                href="{% url "products:basket_add" product.id %}">
                                             Send to cart
                                         </button>
                                     </form>
