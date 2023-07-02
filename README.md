@@ -12,6 +12,10 @@ This is a web application for an online clothing store. The project aims to prov
 - SQLite3 for the database
 - Bootstrap for responsive design
 
+## Check it out!
+
+[Mystore project deployed to Render](https://mystore-ncm1.onrender.com)
+
 ## Installation
 
 1.Clone the repository:
